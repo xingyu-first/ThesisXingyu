@@ -136,7 +136,7 @@
 {\end{quote}}
 
 % Macro for 'List of Symbols', 'List of Notations' etc...
-\def\listofsymbols{\input{symbols} \clearpage}
+\def\listofsymbols{\input{z_example_symbols} \clearpage}
 \def\addsymbol #1: #2#3{$#1$ \> \parbox{4.6in}{#2 \dotfill \pageref{#3}}\\}
 \def\newnot#1{\label{#1}} 
 
@@ -156,7 +156,7 @@
 
 %%% To compile only one or some chapters, use the following
 %   command 
-% \includeonly{chapter1,chapter2,chapter3,chapter4,appendix_A}
+%\includeonly{z_example_chapter1}
 %\includeonly{thesis_acknowledgements,chapter2,chapter3}
 % \includeonly{chapter6}
 
@@ -256,7 +256,7 @@ where-by uni-form de-ri-va-ti-ves con-ti-nu-ous-ly wille-keurige voor-ge-steld}
 \pagenumbering{roman}
 
 %%%  \include the `front matter'
-\include{thesis_front}
+%\include{z_example_thesis_front}
 %\include{thesis_dedication}
 
 %% create the table of contents
@@ -272,7 +272,7 @@ where-by uni-form de-ri-va-ti-ves con-ti-nu-ous-ly wille-keurige voor-ge-steld}
 %%  add the acknowledgements to the table of contents
 \cleardoublepage
 \addcontentsline{toc}{chapter}{Acknowledgements}
-\include{acknowledgements}
+\include{z_example_acknowledgements}
 
 
 \begin{thesymbols}
@@ -317,7 +317,7 @@ where-by uni-form de-ri-va-ti-ves con-ti-nu-ous-ly wille-keurige voor-ge-steld}
 
 % \noappendicestocpagenum
 % \addappheadtotoc
-\include{chapter1}
+\include{z_example_chapter1}
 % \begin{subappendices}
 %  \include{appendix1}
 % \end{subappendices} 
@@ -327,16 +327,16 @@ where-by uni-form de-ri-va-ti-ves con-ti-nu-ous-ly wille-keurige voor-ge-steld}
 
 \noappendicestocpagenum
 % \addappheadtotoc
-\include{chapter2}
+\include{z_example_chapter2}
 % \begin{subappendices}
 %  \include{appendix2}
 % \end{subappendices} 
 
 \noappendicestocpagenum
 \addappheadtotoc
-\include{chapter3}
+\include{z_example_chapter3}
 \begin{subappendices}
- \include{appendix3}
+ \include{z_example_appendix3}
 \end{subappendices} 
 %\include{appendix_A}
 
@@ -398,7 +398,7 @@ where-by uni-form de-ri-va-ti-ves con-ti-nu-ous-ly wille-keurige voor-ge-steld}
 %\bibliographystyle{newagsm} 
 \bibliographystyle{mykluwer} 
 %\bibliographystyle{IEEE} 
-\bibliography{thesis_bibliography}%{,journals,techreports,submitted,conferences}
+\bibliography{z_example_thesis_bibliography}%{,journals,techreports,submitted,conferences}
 
 
 % Summary
