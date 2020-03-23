@@ -1,0 +1,109 @@
+% \begin{flushleft}
+% {\bf\Large{{Appendices}}}
+% \end{flushleft}
+% \vspace{-.6cm}
+% \section{Appendix: Derivatives}
+
+\section{Derivatives of GMLVQ and LiRaM LVQ}\label{app:GMLVQ_derivatives}
+
+Here we show the derivatives of the \ac{GMLVQ} costfunction $E_{\mathrm{GMLVQ}}$ for one presented training 
+example $\v{x}^i$, see Eq.\ (\ref{eq:E_GMLVQ}), 
+with respect to the prototypes $\v{w}^L$ with $L\in\{J,K\}$ and the transformation matrix $\Omega\in\R^{M\times N}$. 
+The derivative with respect to the prototypes can be formulated like following:
+\begin{align}
+d^\Lambda_L &= \sum^N_r\sum^M_m\sum^N_n (x^i_r-w^L_r)\Omega_{mr}\Omega_{mn}(x^i_n-w^L_n) \\
+% 
+\frac{\partial E_{\mathrm{GMLVQ}}}{\partial \v{w}^L} &= \frac{\Phi(\mu^i)}{\partial \mu^i}\cdot\frac{\partial \mu^i}{\partial d^\Lambda_L}
+\cdot\frac{\partial d^\Lambda_L}{\partial \v{w}^L} \\
+% 
+\frac{\partial \mu^i}{\partial d_J^\Lambda} &= \gamma^J = 
+\frac{(d_J^\Lambda+d_K^\Lambda)-(d_J^\Lambda-d_K^\Lambda)}{(d_J^\Lambda+d_K^\Lambda)^2} 
+= \frac{2d_K^\Lambda}{(d_J^\Lambda+d_K^\Lambda)^2} \\
+% 
+\frac{\partial \mu^i}{\partial d_K^\Lambda} &= \gamma^K = 
+\frac{-(d_J^\Lambda+d_K^\Lambda)-(d_J^\Lambda-d_K^\Lambda)}{(d_J^\Lambda+d_K^\Lambda)^2}
+= \frac{-2d_J^\Lambda}{(d_J^\Lambda+d_K^\Lambda)^2} \\
+% 
+\frac{\partial d_L^\Lambda}{\partial w^L_{r}} &= -2\cdot\sum_n^N\sum_m^M \Omega_{mr}\Omega_{mn}(x^i_n-w^L_{n}) %\\
+= -2\left[\Omega^\top\Omega\right]_r(\vec{x}^i-\vec{w}^L) \\
+\frac{\partial d_L^\Lambda}{\partial \v{w}^L}&= -2\cdot\Omega^\top\Omega(\v{x}^i-\v{w}^L) \enspace .
+\end{align}
+The corresponding matrix update reads:
+\begin{align}
+\frac{\partial E_{\mathrm{GMLVQ}}}{\partial \Omega_{mn}} &= 
+\frac{\Phi(\mu^i)}{\partial \mu^i}\cdot\frac{\partial \mu^i}{\partial \Omega_{mn}} \\
+% = \frac{\Phi(\mu^i)}{\partial \mu^i}\cdot
+% \left(\frac{\partial \mu^i}{\partial d^\Lambda_J}\cdot\frac{\partial d^\Lambda_J}{\partial \Omega_{mn}} + 
+% \frac{\partial \mu^i}{\partial d^\Lambda_K}\cdot\frac{\partial d^\Lambda_K}{\partial \Omega_{mn}}\right) \\
+% 
+\notag\frac{\partial \mu^i}{\partial \Omega_{mn}} &= \frac{\left(\frac{\partial d^\Lambda_J}{\partial\Omega_{mn}}-
+\frac{\partial d^\Lambda_K}{\partial\Omega_{mn}}\right)(d^\Lambda_J+d^\Lambda_K)-(d^\Lambda_J-d^\Lambda_K)
+\left(\frac{\partial d^\Lambda_J}{\partial\Omega_{mn}}+
+\frac{\partial d^\Lambda_K}{\partial\Omega_{mn}}\right)}{(d^\Lambda_J+d^\Lambda_K)^2} \\
+%
+\notag&= \frac{2d^\Lambda_K}{(d^\Lambda_J+d^\Lambda_K)^2}\cdot\frac{\partial d^\Lambda_J}{\partial\Omega_{mn}} +  
+  \frac{-2d^\Lambda_J}{(d^\Lambda_J+d^\Lambda_K)^2}\cdot\frac{\partial d^\Lambda_K}{\partial\Omega_{mn}} \\
+% 
+&= \gamma^J\frac{\partial d^\Lambda_J}{\partial\Omega_{mn}} + \gamma^K\frac{\partial d^\Lambda_K}{\partial\Omega_{mn}} \\
+% 
+\notag \frac{\partial d_L^{\Lambda}}{\partial \Omega_{mn}} &= 2\sum_r^N(x^i_n-w^L_{n})\Omega_{mr}(x^i_r-w^L_{r}) \\
+&= 2 \left[\Omega(\v{x}^i-\v{w}^L)\right]_m \cdot(x^i_n-w^L_{n}) \enspace .
+% \notag \frac{\partial \mu}{\partial \Omega_{mn}} &= %-\alpha_2\cdot 
+% %\Phi'(\mu(\vec{x}))\cdot\frac{\partial \mu}{\partial \Omega_{mn}} \\
+% % \Leftrightarrow &= -\alpha_2
+% %\Phi'(\mu(\vec{x}))
+% \left(\gamma^+\frac{\partial d^{\Lambda}_J}{\partial\Omega_{mn}}+\gamma^- \frac{\partial d^{\Lambda}_K}{\partial\Omega_{mn}}\right)\\
+% \Omega_{mn}^{\rm new} &= \Omega_{mn} -\alpha_2 \cdot \frac{\partial \mu}{\partial \Omega_{mn}}
+\end{align}
+
+\section{Derivatives of Localized LiRaM LVQ}\label{app:LLiRaM_LVQ_derivatives}
+
+Now we describe the derivatives of the \ac{LLiRaM LVQ} scheme for one presented training example $\v{x}^i$ 
+with respect to the prototypes $\v{w}^L$, the transformation matrix $\Omega\in\R^{M\times N}$ 
+and the localized dissimilarities denoted by $\Psi^L\in\R^{M\times M}$ with $L\in\{J,K\}$.
+We assume the quantities of the cost function Eq.\ (\ref{eq:E_GMLVQ}) correspond to $d_J^\Lambda=d_J^{\Psi^J}(\v{x}^i,\v{w}^J)$ 
+and $d_K^\Lambda=d_K^{\Psi^K}(\v{x}^i,\v{w}^K)$ using the distance measure defined in 
+Eq.\ (\ref{eq:d_LLiRaM_LVQ}). The derivative with respect to the prototypes is given by:%can be formulated by the following:
+\begin{align}
+\label{eq:d_LLiRaM_LVQ_sums}
+% dJ := multiply(x-wJ, transpose(omega), transpose(psiJ), psiJ, omega, x-wJ):
+% > distJ := add(add(add(add(add(
+% (x[i]-wJ[i])*omega[k, i], i = 1 .. 4)*psiJ[m, k], k = 1 .. 3)*psiJ[m, n], m = 1 .. 3)*omega[n, l], n = 1 .. 3)*(x[l]-wJ[l]), l = 1 .. 4);
+d^{\Psi^L}_L(\v{x}^i,\v{w}^L) &= 
+\sum^N_j\sum_k^M\sum_l^M\sum_m^M\sum_n^N (x^i_j-w^L_j)\Omega_{kj}\Psi^L_{lk}\Psi^L_{lm}\Omega_{mn}(x^i_n-w^L_n) \\
+% 
+\label{eq:derivative_LLiRaM_w}
+\frac{\partial E_{\mathrm{GMLVQ}}}{\partial \v{w}^L} &= \frac{\Phi(\mu^i)}{\partial \mu^i}\cdot\frac{\partial \mu^i}{\partial d^{\Psi^L}_L}
+\cdot\frac{\partial d^{\Psi^L}_L}{\partial \v{w}^L} \\
+% 
+\frac{\partial \mu^i}{\partial d_J^{\Psi^J}} &= \gamma_\Psi^{J} = \frac{2d_K^{\Psi^K}}{(d_J^{\Psi^J}+d_K^{\Psi^K})^2} \\
+% 
+\frac{\partial \mu^i}{\partial d_K^{\Psi^K}} &= \gamma_\Psi^{K} =\frac{-2d_J^{\Psi^J}}{(d_J^{\Psi^J}+d_K^{\Psi^K})^2} \\
+% > testdwJ2 := (pos) 
+% -2*add(add(add(add(omega[j, pos]*psiJ[k, j], j = 1 .. 3)*psiJ[k, m], k = 1 .. 3)*omega[m, i], m = 1 .. 3)*(x[i]-wJ[i]), i = 1 .. 4)
+\notag\frac{\partial d_L^{\Psi^L}}{\partial w^L_r} &= 
+-2\sum^M_k\sum^M_l\sum^M_m\sum^N_n \Omega_{kr}\Psi^L_{lk}\Psi^L_{lm}\Omega_{mn}(x^i_n-w^L_n) \\
+% dwJ := evalm(-2*multiply(transpose(omega),transpose(psiJ),psiJ,omega,(x-wJ))):
+\frac{\partial d_L^{\Psi^L}}{\partial \v{w}^L} &= -2 \Omega^\top\Psi^{L\top}\Psi^L\Omega(\v{x}^i-\v{w}^L)
+\end{align}
+The derivative with respect to the matrices is given by:
+\begin{align}
+\label{eq:derivative_LLiRaM_omega}
+\frac{\partial E_{\mathrm{GMLVQ}}}{\partial\Omega} &= \frac{\Phi(\mu^i)}{\partial \mu^i}\cdot\frac{\partial \mu^i}{\partial \Omega} 
+= \Phi^\prime\cdot\left( \gamma_\Psi^{J}\cdot\frac{\partial d_J^{\Psi^J}}{\partial\Omega} + 
+\gamma_\Psi^{K}\cdot\frac{\partial d_K^{\Psi^K}}{\partial\Omega} \right) \\
+% dJomnsums2 := m, n -> 2*add(add(add((x[n]-wJ[n])*psiJ[j, k]*psiJ[j, m], j = 1 .. 3)*omega[k, i], k = 1 .. 3)*(x[i]-wJ[i]), i = 1 .. 4)
+\frac{\partial d_L^{\Psi^L}}{\partial\Omega_{mn}} &= 2\sum_j^N\sum^M_k\sum_l^M(x_n-w^L_n)\Psi^L_{kl}\Psi^L_{km}\Omega_{lj}(x_j-w^L_j) \\
+% dJo := factor(evalm(2*multiply(transpose(psiJ),(psiJ),omega,x-wJ,transpose(x)-transpose(wJ)))):
+\frac{\partial d_L^{\Psi^L}}{\partial\Omega} &= 2\cdot\Psi^{L\top}\Psi^L\Omega(\v{x}-\v{w}^L)(\v{x}-\v{w}^L)^\top\\
+% 
+\label{eq:derivative_LLiRaM_psi}
+\frac{\partial E_{\mathrm{GMLVQ}}}{\partial\Psi^L} &= \frac{\Phi(\mu^i)}{\partial \mu^i}\cdot\frac{\partial \mu^i}{\partial\Psi^L} 
+= \Phi^\prime\cdot\gamma^L_\Psi \cdot\frac{\partial d_L^{\Psi^L}}{\partial \Psi^L} \\
+% dJpJmntest := (m, n) -> 2*add((x[i]-wJ[i])*omega[n, i], i = 1 .. 4)*add(add((x[i]-wJ[i])*psiJ[m, j]*omega[j, i], i = 1 .. 4), j = 1 .. 3)
+% dJpJmntest2 := (m, n) 2*add(add(add((x[a]-wJ[a])*omega[n, a]*(x[i]-wJ[i])*psiJ[m, j]*omega[j, i], a = 1 .. 4), j = 1 .. 3), i = 1 .. 4)
+\frac{\partial d_L^{\Psi^L}}{\partial \Psi_{mn}^L} &= 2\sum_j^N\sum_k^N\sum_l^M(x_k-w^L_k)\Omega_{nk}(x_j-w_j^L)\Psi^L_{ml}\Omega_{lj} \\
+% f1 = gammaJ*2*psis{c_w(J)}*(omega*DJ'*DJ)*omega';
+% dJdpJ := evalm(2*multiply(psiJ,omega,x-wJ,transpose(x)-transpose(wJ),transpose(omega))):
+\frac{\partial d_L^{\Psi^L}}{\partial \Psi^L} &= 2\cdot\Psi^L\left(\Omega(\v{x}^i-\v{w}^L)(\v{x}^i-\v{w}^L)^\top\right)\Omega^\top
+\end{align}

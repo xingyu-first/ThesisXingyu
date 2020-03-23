@@ -1,0 +1,513 @@
+% latex
+% bibtex journal
+% bibtex conf
+% bibtex techreport
+% bibtex submitpaper
+% latex
+% # embedd the fonts
+% dvips -j0 -Ppdf -Pdownload35 -G0 kbunte_thesis.dvi
+% ps2pdf14 -dPDFSETTINGS=/prepress -dEmbedAllFonts=true kbunte_thesis.ps
+% pdffonts
+%%% For a B5 format, use the following option  
+\documentclass[10pt,fleqn]{phdthesis}%,makeidx
+\makeatletter
+\renewenvironment{thebibliography}[1]
+     {\@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
+%%% For an A4 format, use there options instead
+%\documentclass[12pt,makeidx]{phdthesis}
+%\usepackage{a4wide}
+
+%%% Fonts, uncomment only one option %%%
+%\usepackage{utopia}
+%\usepackage{charter}
+\usepackage{palatino}
+%\usepackage{newcent}
+%\usepackage{avant}
+%\usepackage{pifont}
+%\usepackage{mathpple}
+%\usepackage{mathptmx}
+
+%%% If you want to use MakeIndex to create automatically
+% an index, uncomment these lines
+\usepackage{makeidx}     % only with Latex2e
+\makeindex
+
+% Other packages
+%\usepackage{fancyheadings}
+\usepackage{fancyhdr}
+\usepackage{amsmath,dsfont}
+\usepackage{amssymb,mathabx}
+\usepackage{epsfig}
+\usepackage[figbotcap]{subfigure}
+% \usepackage{subfig}
+\usepackage{graphics}
+\usepackage{float}
+\usepackage{here}
+\usepackage[abbr]{harvard}
+\usepackage{rotating}
+\usepackage{multirow}
+\usepackage{comment}
+\usepackage{captionhack}
+\usepackage{epigraph}
+\usepackage{array,multirow,nicefrac}
+\usepackage{appendix}
+\usepackage{acronym}
+\usepackage[chapter]{algorithm}
+\usepackage{algorithmic}
+
+% \usepackage{showframe}
+
+\usepackage{lscape}
+\usepackage[table]{xcolor}
+\usepackage{tabularx,booktabs}
+\usepackage{wrapfig}
+
+\usepackage{pstricks,pst-node}
+% \usepackage{pstricks-add}%pst-char,,pst-text,ae,pst-grad,pst-slpe
+\usepackage{fancybox}
+% \usepackage[dvips,margin=1cm]{geometry}
+% \usepackage{lmodern,pst-node}
+\usepackage{psfrag}
+
+% \renewcommand{\thesubfigure}{} 
+
+\usepackage{float,afterpage,dblfloatfix}%stfloats
+% dblfloatfix fixes two floatpages after each other
+    % Alter some LaTeX defaults for better treatment of figures:
+    % See p.105 of "TeX Unbound" for suggested values.
+    % See pp. 199-200 of Lamport's "LaTeX" book for details.
+    %   General parameters, for ALL pages:
+    \renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+    \renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+    %   Parameters for TEXT pages (not float pages):
+    \setcounter{topnumber}{2}
+    \setcounter{bottomnumber}{2}
+    \setcounter{totalnumber}{4}     % 2 may work better
+    \setcounter{dbltopnumber}{2}    % for 2-column pages
+    \renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+    \renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+%   Parameters for FLOAT pages (not text pages):
+    \renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+	% N.B.: floatpagefraction MUST be less than topfraction !!
+    \renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+
+\makeatletter
+\def\zaptype#1{%
+\listsubcaptions % Finish the last set of sub-floats before
+\def\@captype{#1}}% switching to another float type.
+\makeatother
+
+%%% Path to the directorz containing the graphics and figures 
+\graphicspath{{./pics/},{./pics/chapter_2/},{./pics/chapter_3/},{./pics/chapter_4/},{./pics/chapter_5/},{./pics/chapter_6/}
+,{./pics/chapter_7/},{./pics/chapter_8/},{./pics/chapter_9/}}
+\usepackage{ifpdf}
+\ifpdf
+\graphicspath{{./png/}}
+\DeclareGraphicsExtensions{.png}
+\else
+  \DeclareGraphicsExtensions{{.eps},{.epsi}}%,{.ps}
+\fi
+%%% General page formatting
+\renewcommand{\textfraction}{0.01}
+\renewcommand{\topfraction}{0.99}
+\renewcommand{\floatpagefraction}{0.99}
+\renewcommand{\bottomfraction}{0.99}
+
+\newenvironment{Abstract}
+{\begin{center}\textbf{Abstract}%
+ \end{center} \small \it \begin{quote}}
+{\end{quote}}
+
+% Macro for 'List of Symbols', 'List of Notations' etc...
+\def\listofsymbols{\input{symbols} \clearpage}
+\def\addsymbol #1: #2#3{$#1$ \> \parbox{4.6in}{#2 \dotfill \pageref{#3}}\\}
+\def\newnot#1{\label{#1}} 
+
+
+\pdfcompresslevel=3
+
+\typeout{Dissertation}
+
+\usepackage{hyperref}
+\usepackage[resetlabels]{multibib}%[resetlabels]
+% \def\@mb@citenamelist{cite,citep,citet,citealp,citealt,footcite,nocite}
+
+% Initialize each paper type for which you need a bibliography.
+% Just a dummy parameter is necessary.
+% \newcites{p}{Publications}
+\newcites{journal,conf,techreport,submitpaper}{Journal Papers,Conference Papers,Technical Reports, Submitted Papers}%Journal Papers
+
+%%% To compile only one or some chapters, use the following
+%   command 
+% \includeonly{chapter1,chapter2,chapter3,chapter4,appendix_A}
+%\includeonly{thesis_acknowledgements,chapter2,chapter3}
+% \includeonly{chapter6}
+
+% Morerow Comments
+% \newcommand{\comment}[1]{{}} 
+
+%% special characters
+% \def\bbbr{{\rm I\!R}} %reelle Zahlen
+\newcommand{\R}{{\rm I\!R}}
+\renewcommand{\v}[1]{\vec{#1}}
+\newcommand{\C}[1]{\mathcal{#1}}
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\m}[1]{\mathbf{#1}}
+\newcommand{\Comp}{\mathds{C}}
+\newcommand{\convolve}{\convolution}
+\newcommand{\vs}{\varsigma}
+\newcommand{\s}{\sigma}
+\newcommand{\D}{\mathrm{D}}
+\renewcommand{\t}[1]{\tilde{#1}}
+
+% correct bad hyphenation here
+% TODO hyphenation
+\usepackage{hyphenat}
+\hyphenation{qua-dra-tic SRBCT pre-ser-va-tion Min-kow-ski a-dapt-ive de-ri-va-tive pat-ches pre-serv-ing re-sul-ting Em-bedd-ing 
+where-by uni-form de-ri-va-ti-ves con-ti-nu-ous-ly wille-keurige voor-ge-steld}
+% solve hyphenation that contain a dash like electromagnetic-endioscopy: electromagnetic\hyp{}endioscopy
+% high\hyp{}dimensional
+
+% \usepackage{scrwfile}
+% \usepackage{xy}%etex
+% \xyoption{all} 
+
+%%% Begining of the document 
+\begin{document}
+% TODO 
+% acronyms
+\acrodef{LVQ}{Learning Vector Quantization}
+\acrodef{OLVQ1}{optimized learning-rate LVQ}
+\acrodef{RLVQ}{Relevance LVQ}
+\acrodef{GLVQ}{Generalized LVQ}
+\acrodef{GRLVQ}{Generalized Relevance LVQ}
+\acrodef{LGRLVQ}{Localized GRLVQ}
+\acrodef{GMLVQ}{Generalized Matrix LVQ}
+\acrodef{LGMLVQ}{Localized GMLVQ}
+\acrodef{LiRaM LVQ}{Limited Rank Matrix LVQ}
+\acrodef{LLiRaM LVQ}{Localized LiRaM LVQ}
+\acrodef{CIA LVQ}{Color Image Analysis LVQ}
+
+\acrodef{STD}{standard deviation}
+\acrodef{MVN}{Multivariate Normal density}
+\acrodef{1-NN}{Nearest Neighbor}
+\acrodef{$k$-NN}{$k$-Nearest Neighbor}
+\acrodef{LMNN}{Large Margin Nearest Neighbor}
+\acrodef{SDP}{semidefinite program}
+\acrodef{MLE}{Maximum Likelihood Estimation}
+
+\acrodef{SOM}{Self-organizing Map}
+\acrodef{GSOM}{Growing Self-Organized Map}
+\acrodef{NG}{Neural Gas}
+\acrodef{ANN}{Artificial Neural Network}
+\acrodef{SVM}{Support Vector Machine}
+\acrodef{CBIR}{Content Based Image Retrieval}
+\acrodef{XOM}{Exploration Observation Machine}
+\acrodef{SONE}{Self Organized Neighbor Embedding}
+\acrodef{t-SONE}{t-distributed SONE}
+
+\acrodef{PCA}{Principal Component Analysis}
+\acrodef{NCA}{Neighborhood Component Analysis}
+\acrodef{LDA}{Linear Discriminant Analysis}
+\acrodef{FDA}{Fisher Discriminant Analysis}
+\acrodef{LFDA}{local Fisher discriminant analysis}
+\acrodef{PLS}{partial Least Squares regression}
+\acrodef{MDS}{Multidimensional Scaling}
+\acrodef{SNE}{Stochastic Neighbor Embedding}
+\acrodef{t-SNE}{t-distributed SNE}
+\acrodef{LPP}{Locality\hyp{}Preserving Projection}
+\acrodef{TPP}{Targeted Projection Pursuit}
+\acrodef{LLE}{Locally Linear Embedding}
+\acrodef{MVU}{Maximum Variance Unfolding}
+\acrodef{LLC}{Locally Linear Coordination}
+\acrodef{NeRV}{Neighborhood Retrieval Visualizer}
+\acrodef{t-NeRV}{t-distributed NeRV}
+\acrodef{LTSA}{Local Tangent Space Alignment}
+
+\acrodef{sNeRV}{supervised NeRV}
+\acrodef{MRE}{Multiple Relational Embedding}
+\acrodef{cMVU}{Colored MVU}
+\acrodef{MUHSIC}{maximum unfolding via Hilbert-Schmidt independence criterion}
+\acrodef{S-Isomap}{supervised Isomap}
+\acrodef{PE}{Parametric Embedding}
+
+\acrodef{KL}{Kullback-Leibler}
+\acrodef{GKL}{generalized Kullback-Leibler}
+\acrodef{IS}{Itakura-Saito}
+
+\pagestyle{fancyplain}
+\pagenumbering{roman}
+
+%%%  \include the `front matter'
+\include{thesis_front}
+%\include{thesis_dedication}
+
+%% create the table of contents
+\cleardoublepage
+%\clearpage
+\lhead[]{\fancyplain{}{\rightmark}}
+\chead[\fancyplain{}{}]{\fancyplain{}{}}
+\rhead[\fancyplain{}{\leftmark}]{\fancyplain{}{}}
+%\rhead[\fancyplain{}{}]{\fancyplain{}{}}
+%\lhead[\fancyplain{}{}]{\fancyplain{}{}}
+\tableofcontents
+
+%%  add the acknowledgements to the table of contents
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\include{acknowledgements}
+
+
+\begin{thesymbols}
+\listofsymbols
+\end{thesymbols}
+
+\addcontentsline{toc}{chapter}{List of figures}
+\listoffigures
+% \addcontentsline{toc}{chapter}{List of tables}
+% \listoftables
+\addcontentsline{toc}{chapter}{List of algorithms}
+\listofalgorithms
+
+%\clearpage
+\cleardoublepage
+
+%%% Customisation of the header and footer for the chapters
+\pagestyle{headings}
+%------------------------------
+\newcommand{\publ}{}
+
+\pagestyle{fancyplain}
+%\setlength{\headrulewidth}{0.3pt}
+%\setlength{\footrulewidth}{0.0pt}
+%\setlength{\plainfootrulewidth}{0.0pt}
+%\setlength{\plainheadrulewidth}{0pt}
+\renewcommand{\sectionmark}[1]{\markright{\it \thesection.\ #1}}
+\renewcommand{\chaptermark}[1]{\markboth{
+       \it \thechapter.\ #1}{}}
+\lhead[\thepage]{\fancyplain{}{\rightmark}}%\publ
+\chead[\fancyplain{}{}]{\fancyplain{}{}}
+\rhead[\fancyplain{}{\leftmark}]{\fancyplain{}{\thepage}}
+\lfoot[]{}
+\cfoot[]{}
+\rfoot[]{}
+%------------------------------
+
+
+%%  include the LaTeX files containing the text for each chapters 
+%   create the appendix and include it 
+\pagenumbering{arabic}
+
+% \noappendicestocpagenum
+% \addappheadtotoc
+\include{chapter1}
+% \begin{subappendices}
+%  \include{appendix1}
+% \end{subappendices} 
+
+\part{Adaptive Dissimilarity Measures}%Metrics in Prototype Based Learning
+\label{part:1}
+
+\noappendicestocpagenum
+% \addappheadtotoc
+\include{chapter2}
+% \begin{subappendices}
+%  \include{appendix2}
+% \end{subappendices} 
+
+\noappendicestocpagenum
+\addappheadtotoc
+\include{chapter3}
+\begin{subappendices}
+ \include{appendix3}
+\end{subappendices} 
+%\include{appendix_A}
+
+% \noappendicestocpagenum
+% \addappheadtotoc
+% \include{chapter4}
+% \begin{subappendices}
+%  \include{appendix3}
+% \end{subappendices} 
+
+% \noappendicestocpagenum
+% \addappheadtotoc
+% \include{chapter5}
+% \begin{subappendices}
+%  \include{appendix5}
+% \end{subappendices} 
+% 
+% \part{Dimension Reduction and Visualization}
+% \label{part:2}
+% 
+% \noappendicestocpagenum
+% \addappheadtotoc
+% \include{chapter6}
+% \begin{subappendices}
+%  \include{appendix6}
+% \end{subappendices} 
+% 
+% % \noappendicestocpagenum
+% % \addappheadtotoc
+% \include{chapter7}
+% 
+% \noappendicestocpagenum
+% \addappheadtotoc
+% \include{chapter8}
+% \begin{subappendices}
+%  \include{appendix8}
+% \end{subappendices} 
+% 
+% \noappendicestocpagenum
+% \addappheadtotoc
+% \include{chapter9}
+% \begin{subappendices}
+%  \include{appendix9}
+% \end{subappendices} 
+% 
+% \include{chapter10}
+% 
+% \include{publications}
+
+%% include the bibliography
+% \renewcommand{\publ}{}
+% \cleardoublepage
+% \small
+\addcontentsline{toc}{chapter}{Bibliography}
+\chapter*{Bibliography}
+%%%  options for the bibliography style 
+% \renewcommand{\bibname}{Bibliography}
+%\bibliographystyle{plain} 
+%\bibliographystyle{newagsm} 
+\bibliographystyle{mykluwer} 
+%\bibliographystyle{IEEE} 
+\bibliography{thesis_bibliography}%{,journals,techreports,submitted,conferences}
+
+
+% Summary
+\samenvatting
+% \include{samenvatting}
+Deze thesis presenteert een aantal extensies van het \ac{GLVQ} algoritme gebaseerd op het concept van adaptive similarity measures. 
+Deze metric learning kan worden gebruikt in een grote verscheidenheid aan applicaties, waaronder \ac{CBIR}, supervised dimension reduction 
+en advanced texture learning bij image analysis, om een paar te noemen. 
+Het gedetailleerde onderzoek naar dimensionality reduction komt uitgebreid aan bod in de tweede helft van de thesis. 
+Dit omvat onderzoek naar generalized explicit dimension reduction mappings voor unsupervised en supervised dimension reduction. 
+Een nieuwe techniek voor efficient unsupervised non-linear dimension reduction wordt voorgesteld die de concepten van fast online learning 
+en optimalisatie van divergenties combineert. 
+Tot slot worden drie op divergentie gebaseerde algoritmes gegeneraliseerd en onderzocht op het gebruik van willekeurige divergenties.
+
+In Chapter \ref{chapter:LVQ} wordt de benodigde achtergrond voor adaptive metric learning en prototype-based classification gegeven. 
+Vervolgens wordt \ac{LiRaM LVQ} ge\"introdu-ceerd in Chapter \ref{chapter:LiRaMLVQ}, een algoritme gericht op effici\"ente optimalisatie 
+van classificatie, met name bij zeer hoog-dimensionale datasets. 
+Door de rank van de adaptieve matrix, een onderdeel van de gebruikte afstand, te begrenzen, kan het aantal vrije parameters expliciet 
+worden gereguleerd. 
+We laten zien dat naast computationele effici\"entie, het begrenzen van de rank een hogere kwaliteit laat zien vergeleken met alternatieve 
+methoden gebaseerd op de decompositie van eigenwaarden na training, met name wanneer de target-dimensie lager is dan de intrinsieke 
+dimensionaliteit van de dataset. 
+Daarnaast staat dit concept discriminant linear dimension reduction toe, gericht op het behoud van de classification accuracy bij 
+lagere dimensionaliteit. 
+Door de distance measure in globale en lokale of klasse-specifieke matrices te ontbinden kunnen complexere decision boundaries worden 
+bewerkstelligd in de visualisatie. 
+Dit combineert linear dimension reduction met localized similarity measures in laag-dimensionale ruimte, wat resulteert in non-linear 
+decision boundaries van de receptieve velden. 
+De dimension reduction met \ac{LiRaM LVQ} toont vergelijkbare of betere resultaten dan alternatieve state-of-the-art technieken. 
+Bovendien is de methode ook computationeel gezien effici\"ent. In contrast met andere high-quality technieken vereist het niet de 
+berekening van pair-wise affinities van de datapunten, maar slechts hun afstand tot het (kleine) aantal prototypes, wat over het 
+algemeen minder berekeningen vereist. Verschillende experimenten op real-world datasets worden gepresenteerd en bevestigen onze claims.
+
+Chapter \ref{chapter:CBIR} presenteert een voorbeeldapplicatie van \ac{LiRaM LVQ} in de context van \ac{CBIR}. 
+Voor veel medische applicaties is de hoeveelheid data enorm gestegen in de afgelopen jaren. 
+Daarom zijn computer aided diagnosis systems, die geautomatiseerd databases doorzoeken om potentieel interessante data voor een bepaalde 
+taak voor te selecteren, zeer wenselijk. Dit werk behandelt \ac{CBIR} in de context van dermatologie. 
+In een samenwerkingsverband heeft de afdeling Dermatologie van het Universitair Medisch Centrum Groningen een database met afbeeldingen 
+van verschillende typen huidletsels beschikbaar gesteld. 
+Het doel is om gegeven een afbeelding een bepaald aantal vergelijkbare afbeeldingen op te leveren. 
+Met het gebruik van adaptive metrics waren we in staat om het aandeel correct opgeleverde afbeeldingen aanzienlijk te verhogen, 
+voor willekeurige color spaces. 
+We vergelijken twee technieken voor distance learning: de \ac{LMNN} en de \ac{LiRaM LVQ} methode. 
+Het is opmerkelijk dat \ac{LiRaM LVQ} hierbij beter presteerde dan \ac{LMNN} met typische instellingen. 
+Door de complexiteit en het tijdsverbruik van \ac{LMNN} te laten toenemen konden vergelijkbare resultaten worden behaald.
+
+In Chapter \ref{chapter:CIA_LVQ} introduceren we een complexe variant op \ac{GLVQ} voor texture classification, genaamd \ac{CIA LVQ}. 
+Deze flexibele methode combineert discriminative local linear projections in het Fourierdomein met linear filtering, e.g. met Gabor filters. 
+Lineaire filteroperaties zijn vaak gedefinieerd op intensiteitswaarden. 
+In het verleden zijn enkele heuristieke methoden voor filteroperaties op kleurenafbeeldingen voorgesteld die de response- of energiewaarden 
+van kleurkanalen op een betekenisvolle manier combineren. 
+Onze methode is van verschillende aard omdat het gebaseerd is op een automatisch lerende procedure gestuurd door supervised training. 
+Hiervoor wordt a priori een Gabor filterbank verzameld met gewichten en ori\"entaties passend bij de texture recognition taak. 
+We nemen willekeurige segmenten van kleurenafbeeldingen van bekende klassen en voor elk van deze transformeren we de kleurkanalen 
+afzonderlijk naar het Fourierdomein. 
+De transformaties van kleurwaarden naar intensiteitswaarden worden geleerd door het \ac{CIA LVQ} systeem om de filterresponses op 
+deze getransformeerde segmenten beter te kunnen onderscheiden. 
+In het bijzonder bij textures die zich in de natuur voordoen zoals schors en voedselstructuren presteert de voorgestelde techniek beter 
+dan alternatieve methoden waaronder het na\"ieve gebruik van een RGB naar grijswaarden transformatie, hetgeen in de praktijk vaak 
+gebruikt wordt. 
+Bovendien toont \ac{CIA LVQ} uitstekende eigenschappen met betrekking tot evaluatie-afbeeldingen die niet eerder aan het systeem getoond zijn.
+
+Deel \ref{part:2} van deze thesis behandelt verschillende aspecten die betrekking hebben op dimension reduction. In Chapter \ref{chapter:DiReduct} wordt een nieuwe algemene opvatting voorgesteld die de aanpassing van verschillende methoden voor dimension reduction voor explicit 
+mappings vergemakkelijkt. 
+In plaats van een impliciete optimalisatie van de posities van laag-dimensionale datapunten predefini\"eren we de vorm van 
+een mapping-functie $f_W$ geparametriseerd door $W$, en optimaliseren we de parameters ten behoeve van een specifiek doel. 
+Dit heeft het voordeel dat de training uitgevoerd kan worden op slechts een klein deel van de data en een rechtstreekse out-of-sample extensie 
+voor alle datapunten is direct beschikbaar. 
+Daarnaast wordt een theoretisch onderzoek naar de generalisatie-eigenschappen van dimension reduction mogelijk. 
+We demonstreren het concept van dimension reduction mappings gebaseerd op de \acf{t-SNE} kostenfunctie en verschillende alternatieven voor 
+de mapping-functie $f_W$. 
+Dit omvat zowel unsupervised linear en non-linear mappings gebaseerd op local \acs{PCA} alsook supervised mappings die gebruikmaken van 
+discriminative local linear projections. We vergelijken de methode met verschillende state-of-the-art technieken, tonen de uitstekende 
+generalisatie-eigenschappen voor verschillende datasets en behandelen tenslotte het theoretische onderzoek naar dimension reduction mappings. 
+In alle gevallen geeft onze methode vergelijkbare of zelfs betere resultaten.
+
+Chapter \ref{chapter:discriminative_DR} onderzoekt supervised dimension reduction gebaseerd op adaptieve afstanden en local linear projections 
+verkregen door \acs{GMLVQ} and \ac{LiRaM LVQ}. 
+Dit maakt de integratie van dimension reduction in de optimalisatieprocedure gericht op discriminative visualizations mogelijk. 
+We laten zien met behulp van verschillende voorbeelden dat bestaande methoden voor dimension reduction uitgebreid kunnen worden naar een 
+supervised setting gebruikmakend van de geleerde metrics en discriminative transformations van \acs{LVQ}.
+
+In Chapter \ref{chapter:SONE} wordt een methode voor unsupervised dimension reduction voorgesteld, die fast sequential online learning 
+combineert met direct divergence optimization zoals gebruikt in \ac{SNE} en \ac{t-SNE}. 
+Deze techniek heet \acf{SONE} en vertoont enkele interessante eigenschappen: in zijn oorspronkelijke formulering is \ac{SONE} gebaseerd 
+op een structuurhypothese die de gebruiker in staat stelt om het uiterlijk van de uiteindelijke embedding en de computationele inspanningen 
+aan te passen. 
+Veel technieken voor dimension reduction vereisen de berekening van alle pair-wise affinities van laag-dimensionale afbeeldingsvectoren 
+in een optimalisatiestap. 
+Dit heeft een computationele complexiteit van $\C{O}(n^2)$ tot gevolg, waarbij $n$ staat voor het aantal datapunten. 
+\ac{SONE} berekent de afstanden naar \'e\'en sampling vector uit de gegeven hypothese in iedere iteratie voor de aanpassing van alle punten. 
+Daarmee is de computationele complexiteit lineair afhankelijk van het aantal punten en sampling vectors gegeven door de hypothese. 
+Ondanks het feit dat de methode minder complex is dan \ac{SNE} en \ac{t-SNE}, toont het een vergelijkbare kwaliteit zoals gedemonstreerd 
+wordt aan de hand van een aantal voorbeelden.
+
+Chapter \ref{chapter:divergences} behandelt een systematische aanpak voor de wiskundige behandeling van divergence based dimension reduction, 
+zoals \ac{SNE}, \ac{t-SNE} en \ac{SONE}, ten behoeve van de uitwisseling van hun respectievelijke modules. 
+Naast de onafhankelijke behandeling van de verdeling in laag-dimensionale ruimte, e.g. het gebruik van een Gaussian voor \ac{SNE} en een 
+t-verdeling in \ac{t-SNE}, concentreren we ons op de divergentie waarmee het verschil tussen verdelingen in de originele en de 
+embedding-ruimte gemeten wordt. Daarom bekijken we de divergentie-families en hun eigenschappen. 
+We stellen een algemeen framework voor gebaseerd op het concept van Fr\'{e}chet-afgeleiden en leiden de expliciete learning rules voor een 
+breed scala aan divergenties af. 
+In de experimenten concentreren we ons op de evaluatie van de Gamma-divergentie voor \ac{t-SNE} en \ac{SONE} in een aantal real-world datasets. 
+We zagen dat de Gamma-divergentie de kwaliteit van de embeddings voor small neighborhoods verbetert vergeleken met de originele 
+formulering met behulp van Kullback\hyp{}Leibler.
+
+% include the index
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Index}
+\printindex
+
+\end{document}
